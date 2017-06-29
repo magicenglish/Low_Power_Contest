@@ -8,12 +8,12 @@ proc dualVth {args} {
     set cycles 5
   }
 
+  # Available Libraries
   set_user_attribute [find library CORE65LPLVT] default_threshold_voltage_group LVT > /dev/null
   set_user_attribute [find library CORE65LPHVT] default_threshold_voltage_group HVT > /dev/null
+
+  # To delete
   report_global_slack -max > /dev/null
-  #################################
-  ### INSERT YOUR COMMANDS HERE ###
-  #################################
 
   # Compute number of cells that must be swapped to HVT
   set number_of_cells [sizeof_collection [get_cell]]
@@ -26,11 +26,9 @@ proc dualVth {args} {
 
   set remaining $number_hvt
 
-  ###########################
   # Create 2 lists ordered by slack
-  ###########################
-
   while {$remaining > 0} {
+    # get pins
     set lvt_pins [get_pins -filter "@cell.lib_cell.threshold_voltage_group == LVT"]
     # take pins collection and sort by slack
     set sorted_pins_collection [sort_collection $lvt_pins {max_slack}]
@@ -38,20 +36,19 @@ proc dualVth {args} {
     set cell_unmasked [get_attribute $sorted_pins_collection cell]
     set cell [index_collection $cell_unmasked 0]
     append_to_collection cell $cell_unmasked -unique
-    # now cell_unmasked contains a collection of cells sorted from lower to higher slack
+    # cell_unmasked is a collection of cells sorted from lower to higher slack
     set cell_list      [get_attribute $cell full_name]
     set type_cell_list [get_attribute $cell ref_name]
 
-    ###########################
-    # Change cells LVT -> HVT #
-    ###########################
-
+    # Take number of remaining LVT cells
     set coll_length [expr {[sizeof_collection $cell] - 1}]
 
+    # Last cycle
     if {$remaining <= $N} {
       set N [incr remaining]
     }
 
+    # Swap cells LVT -> HVT
     for {set x 0} {$x<$N} {incr x} {
       set pointer   [expr   {$coll_length - $x}]
       set cell_temp [lindex $cell_list $pointer]
@@ -60,20 +57,28 @@ proc dualVth {args} {
       size_cell $cell_temp CORE65LPHVT_nom_1.20V_25C.db:CORE65LPHVT/$type_temp > /dev/null
     }
 
+    # Static Timing Analysis: compute slack
     update_timing
 
+    # Update number of cells to be swapped
     incr remaining -$N
 
+    # Soft algorithm
     if {$constraint == "soft"} {
+      # Checking the slack
       set slack_tot [get_attribute [get_timing_paths] slack]
+
+      # If slack < 0
       if { $slack_tot < 0 } {
         set remaining $N
+
+        # Revert cells to get the slack close as possible to 0
         while {$slack_tot < 0} {
           set N [expr {($N >> 2) + 1} ]
-
           set hvt_pins [get_pins -filter "@cell.lib_cell.threshold_voltage_group == HVT"]
           # Take pins collection and sort by slack
           set sorted_pins_collection [sort_collection $hvt_pins {max_slack}]
+
           # Delete repeated cells
           set cell_unmasked [get_attribute $sorted_pins_collection cell]
           set cell [index_collection $cell_unmasked 0]
@@ -82,16 +87,11 @@ proc dualVth {args} {
           set cell_list      [get_attribute $cell full_name]
           set type_cell_list [get_attribute $cell ref_name]
 
-          ###########################
-          # Change cells HVT -> LVT #
-          ###########################
-
+          # Swap cells HVT -> LVT
           set coll_length [expr {[sizeof_collection $cell] - 1}]
-
           if {$remaining <= $N} {
             set N [incr remaining]
           }
-
           for {set x 0} {$x<$N} {incr x} {
             set pointer   [expr   {$x}]
             set cell_temp [lindex $cell_list $pointer]
@@ -100,9 +100,11 @@ proc dualVth {args} {
             size_cell $cell_temp CORE65LPLVT_nom_1.20V_25C.db:CORE65LPLVT/$type_temp > /dev/null
           }
 
+          # Static Timing Analysis: compute slack
           update_timing
           set slack_tot  [get_attribute [get_timing_paths] slack]
         }
+        # After the while loop, exit
         break
       }
     }
