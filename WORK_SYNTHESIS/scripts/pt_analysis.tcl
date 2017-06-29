@@ -36,7 +36,9 @@ suppress_message CMD-041
 ##
 ######################################################################
 # DEFINE CIRCUITS
-set blockName "c1908"
+
+set blockName "aes_cipher_top"
+
 
 # DEFINE INPUT FILES
 set dir "./saved/${blockName}/synthesis"
@@ -59,8 +61,8 @@ update_timing -full
 report_timing -delay_type max
 
 # SLACK CONDITION
-# report_timing -delay_type min -slack_lesser_than 0.1 -max_paths 2
-# report_timing -delay_type max -slack_lesser_than 0.0 -max_paths 2
+report_timing -delay_type min -slack_lesser_than 0.1 -max_paths 2
+report_timing -delay_type max -slack_lesser_than 0.0 -max_paths 2
 
 ######################################################################
 ##

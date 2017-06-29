@@ -1,0 +1,54 @@
+****************************************
+Report : timing
+	-path_type full
+	-delay_type max
+	-max_paths 1
+	-sort_by slack
+Design : c5315
+Version: J-2014.12
+Date   : Thu Jun 29 14:24:56 2017
+****************************************
+
+
+  Startpoint: N335 (input port clocked by clk)
+  Endpoint: N7735 (output port clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                    Incr       Path
+  ---------------------------------------------------------------
+  clock clk (rise edge)                0.000000   0.000000
+  clock network delay (ideal)          0.000000   0.000000
+  input external delay                 0.150000   0.150000 f
+  N335 (in)                            0.020577   0.170577 f
+  U785/Z (HS65_LL_IVX27)               0.035201   0.205779 r
+  U911/Z (HS65_LL_MUX21X9)             0.068847   0.274626 f
+  U670/Z (HS65_LL_NAND2X7)             0.030357   0.304983 r
+  U757/Z (HS65_LL_IVX7)                0.021203   0.326186 f
+  U745/Z (HS65_LL_NOR2X5)              0.047389   0.373574 r
+  U738/Z (HS65_LL_IVX7)                0.036144   0.409718 f
+  U658/Z (HS65_LL_NOR2X6)              0.047306   0.457025 r
+  U849/Z (HS65_LL_NAND2X2)             0.055998   0.513023 f
+  U728/Z (HS65_LL_NAND2AX4)            0.068005   0.581028 f
+  U653/Z (HS65_LL_NOR2X6)              0.054597   0.635625 r
+  U603/Z (HS65_LL_AOI12X6)             0.048893   0.684518 f
+  U717/Z (HS65_LL_OAI12X3)             0.052336   0.736854 r
+  U874/Z (HS65_LL_MUXI21X2)            0.065104   0.801958 f
+  U789/Z (HS65_LL_AO222X4)             0.172544   0.974502 f
+  U903/Z (HS65_LL_MX41X14)             0.124861   1.099363 f
+  N7735 (out)                          0.000322   1.099685 f
+  data arrival time                               1.099685
+
+  clock clk (rise edge)                1.250000   1.250000
+  clock network delay (ideal)          0.000000   1.250000
+  clock reconvergence pessimism        0.000000   1.250000
+  output external delay                -0.150000  1.100000
+  data required time                              1.100000
+  ---------------------------------------------------------------
+  data required time                              1.100000
+  data arrival time                               -1.099685
+  ---------------------------------------------------------------
+  slack (MET)                                     0.000315
+
+
+1

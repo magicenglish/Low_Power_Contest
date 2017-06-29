@@ -45,7 +45,7 @@ suppress_message RTDC-126
 
 # DEFINE CIRCUITS and WORK DIRS
 # set blockName "aes_cipher_top"
-set blockName "c5315"
+set blockName "aes_cipher_top"
 set active_design $blockName
 
 # DEFINE WORK DIRS

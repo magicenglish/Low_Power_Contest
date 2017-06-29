@@ -1,8 +1,8 @@
 ****************************************
 Report : Averaged Power
-Design : aes_cipher_top
+Design : c5315
 Version: J-2014.12
-Date   : Thu Jun 29 18:46:02 2017
+Date   : Thu Jun 29 14:24:56 2017
 ****************************************
 
 
@@ -15,18 +15,18 @@ Date   : Thu Jun 29 18:46:02 2017
                         Internal  Switching  Leakage    Total
 Power Group             Power     Power      Power      Power   (     %)  Attrs
 --------------------------------------------------------------------------------
-clock_network           9.935e-04    0.0000    0.0000 9.935e-04 (24.24%)  i
-register                4.828e-04 6.678e-04 3.380e-06 1.154e-03 (28.15%)  
-combinational           7.210e-04 1.220e-03 1.093e-05 1.952e-03 (47.62%)  
+clock_network              0.0000    0.0000    0.0000    0.0000 ( 0.00%)  i
+register                   0.0000    0.0000    0.0000    0.0000 ( 0.00%)  
+combinational           3.048e-04 9.151e-04 1.801e-06 1.222e-03 (100.00%) 
 sequential                 0.0000    0.0000    0.0000    0.0000 ( 0.00%)  
 memory                     0.0000    0.0000    0.0000    0.0000 ( 0.00%)  
 io_pad                     0.0000    0.0000    0.0000    0.0000 ( 0.00%)  
 black_box                  0.0000    0.0000    0.0000    0.0000 ( 0.00%)  
 
-  Net Switching Power  = 1.888e-03   (46.05%)
-  Cell Internal Power  = 2.197e-03   (53.60%)
-  Cell Leakage Power   = 1.431e-05   ( 0.35%)
+  Net Switching Power  = 9.151e-04   (74.90%)
+  Cell Internal Power  = 3.048e-04   (24.95%)
+  Cell Leakage Power   = 1.801e-06   ( 0.15%)
                          ---------
-Total Power            = 4.100e-03  (100.00%)
+Total Power            = 1.222e-03  (100.00%)
 
 1
